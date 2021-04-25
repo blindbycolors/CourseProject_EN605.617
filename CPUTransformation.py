@@ -2,10 +2,14 @@ from random import uniform
 import numpy as np
 import Utilities
 import constants
-from timeit import  default_timer as timer
+from timeit import default_timer as timer
 
-def cpuIfsTransform(transformation=constants.ifsFractals["fern"], width=600,
-                    height=600, num_points=100000, output_file="cpuOut.png"):
+
+def cpuIfsTransform(transformation=constants.ifsFractals["fern"],
+                    width=600,
+                    height=600,
+                    num_points=100000,
+                    output_file="cpuOut.png"):
     """
     This function will perform the Iterated Function System (IFS) fractal
     algorithm in the traditional, iterative process
@@ -49,8 +53,12 @@ def cpuIfsTransform(transformation=constants.ifsFractals["fern"], width=600,
     Utilities.drawImage(points, width, height, output_file)
     return timer() - start
 
-def cpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
-                        divergence_value=10, width=300, output_file="cpuOut.png"):
+
+def cpuDivergentFractal(c=constants.juliaFractals["set1"],
+                        iterations=200,
+                        divergence_value=10,
+                        width=300,
+                        output_file="cpuOut.png"):
     """
     CPU implementation of divergent quadratic map 'z = z^2 + c' for nIterations
     :param c: Complex value representation
@@ -59,12 +67,11 @@ def cpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
     :param width: Width of the image in pixels. The same value will be used for
         the image height
     :param output_file: Filename to save image as
-    :return:
+    :return: algorithm runtime in seconds
     """
-
+    start = timer()
     height = width
-    points = np.zeros((width, height),
-                      dtype=np.float32)
+    points = np.zeros((width, height), dtype=np.float32)
 
     for w in range(width):
         for h in range(height):
@@ -80,3 +87,4 @@ def cpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
                 points[w, h] = count
 
     Utilities.plotFractal(points, output_file=output_file)
+    return timer() - start

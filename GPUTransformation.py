@@ -44,14 +44,14 @@ def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
     mod = SourceModule(KernelCode.ifsTransform, no_extern_c=True)
     ifsFunc = mod.get_function("phase1Transform")
     ifsFunc(gpuX, gpuY, gpuTransform, np.int32(num_points), np.int32(rows),
-         block=block, grid=grid, shared=sys.getsizeof(gpuTransform))
+            block=block, grid=grid, shared=sys.getsizeof(gpuTransform))
 
     currIter = 0
     while currIter < 15:
         ifsFunc(gpuX, gpuY, gpuTransform,
-             np.int32(num_points), np.int32(rows),
-             block=block, grid=grid,
-             shared=sys.getsizeof(gpuTransform))
+                np.int32(num_points), np.int32(rows),
+                block=block, grid=grid,
+                shared=sys.getsizeof(gpuTransform))
         currIter += 1
 
     x = gpuX.get()
@@ -60,8 +60,12 @@ def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
     Utilities.drawImage(points, width, height, output_file)
     return timer() - start
 
-def gpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
-                        divergence_value=4, width=300, block_size=64,
+
+def gpuDivergentFractal(c=constants.juliaFractals["set1"],
+                        iterations=200,
+                        divergence_value=10,
+                        width=300,
+                        block_size=64,
                         output_file="gpuOut.png"):
     """
     GPU implementation of divergent quadratic map 'z = z^2 + c' for nIterations.
@@ -71,8 +75,9 @@ def gpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
     :param c: Complex value representation
     :param iterations: total number of iterations
     :param divergence_value: divergence value for algorithm
-    :return: none
+    :return: algorithm runtime in seconds
     """
+    start = timer()
     height = width
     gpuData = gpuarray.empty((width, height), np.int32)
 
@@ -86,3 +91,4 @@ def gpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
          np.int32(divergence_value), block=block, grid=grid)
     data = gpuData.get()
     Utilities.plotFractal(data, width, height, output_file)
+    return timer() - start
