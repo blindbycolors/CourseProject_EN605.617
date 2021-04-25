@@ -2,6 +2,7 @@ import CPUTransformation
 import GPUTransformation
 import constants
 
+
 if __name__ == '__main__':
     CPUTransformation.cpuIfsTransform(output_file="cpuIFSOut.png")
     GPUTransformation.gpuIfsTransform(output_file="gpuIFSOut.png")

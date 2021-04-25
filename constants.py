@@ -9,11 +9,6 @@ barnsleyFern = [
     [0.20, -0.26, 0.23, 0.22, 0, 1.6, 0.07],
     [-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07]
 ]
-triangle = [
-    [0.5, 0, 0, 0.5, 0, 0, 0.33],
-    [0.5, 0, 0, 0.5, 0.5, 0, 0.33],
-    [0.5, 0, 0, 0.5, 0.25, 0.433, 0, 0.34]
-]
 goldenDragon = [
     [0.62367, -0.40337, 0.40337, 0.62367, 0, 0, 0.5],
     [-0.37633, -0.40337, 0.40337, -0.37633, 0.5, 0, 0.5]
@@ -62,7 +57,6 @@ twig = [
 
 ifsFractals = {
     "fern": barnsleyFern,
-    "triangle": triangle,
     "goldenDragon": goldenDragon,
     "mapleLeaf": mapleLeaf,
     "pentadentrite": pentadentrite,
