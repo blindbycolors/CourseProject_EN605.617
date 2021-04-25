@@ -36,7 +36,7 @@ def plotFractal(fractal_data, img_size=16, tol=.1, output_file="out.png"):
     plt.imshow(img)
     plt.savefig(output_file, bbox_inches='tight')
 
-
+#source https://blog.demofox.org/2017/05/29/when-random-numbers-are-too-random-low-discrepancy-sequences/
 def hammersley(num_samples):
     truncateBits = 0
     value = c_size_t(1)
@@ -45,7 +45,8 @@ def hammersley(num_samples):
         value.value *= 2
         numBits.value += 1
 
-    samples = list()
+    x = list()
+    y = list()
     for i in range(num_samples):
         n = c_size_t(i >> truncateBits)
         base = np.float32(1.0) / np.float32(2.0)
@@ -68,6 +69,7 @@ def hammersley(num_samples):
             mask = c_size_t(int(mask.value / 2))
             base /= np.float32(2)
 
-        samples.append((xAxis, yAxis))
+        x.append(xAxis)
+        y.append(yAxis)
 
-    return samples
+    return x,y
