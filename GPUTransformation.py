@@ -28,30 +28,27 @@ def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
     """
     start = timer()
     # Generate Hammersley sequence
-    hammersley = Utilities.hammersley(num_points)
-    x = list()
-    y = list()
+    block = (block_size, 1, 1)
 
-    for k, v in hammersley:
-        x.append(k)
-        y.append(v)
+    gpuX = gpuarray.to_gpu(np.zeros(num_points, np.float32))
+    gpuY = gpuarray.to_gpu(np.zeros(num_points, np.float32))
+    dataGeneration = SourceModule(KernelCode.gpuHammersley)
+    hammersleyFunc = dataGeneration.get_function("hammersley")
+    hammersleyFunc(np.int32(num_points), gpuX, gpuY, block=block)
 
-    gpuX = gpuarray.to_gpu(np.array(x, np.float32))
-    gpuY = gpuarray.to_gpu(np.array(y, np.float32))
     transformation = np.array(transformation, np.float32)
     gpuTransform = gpuarray.to_gpu(transformation)
     rows, cols = transformation.shape
 
-    block = (block_size, 1, 1)
     grid = (num_points, 1, 1)
     mod = SourceModule(KernelCode.ifsTransform, no_extern_c=True)
-    func = mod.get_function("phase1Transform")
-    func(gpuX, gpuY, gpuTransform, np.int32(num_points), np.int32(rows),
+    ifsFunc = mod.get_function("phase1Transform")
+    ifsFunc(gpuX, gpuY, gpuTransform, np.int32(num_points), np.int32(rows),
          block=block, grid=grid, shared=sys.getsizeof(gpuTransform))
 
     currIter = 0
     while currIter < 15:
-        func(gpuX, gpuY, gpuTransform,
+        ifsFunc(gpuX, gpuY, gpuTransform,
              np.int32(num_points), np.int32(rows),
              block=block, grid=grid,
              shared=sys.getsizeof(gpuTransform))

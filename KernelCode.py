@@ -26,8 +26,11 @@ extern "C"
         __syncthreads();
     }
 
-    __global__ void phase1Transform(float *xPoints, float *yPoints, float *transform, int numPoints,
-                                int numTransform)
+    __global__ void phase1Transform(float *xPoints,
+                                    float *yPoints, 
+                                    float *transform,
+                                    int numPoints,
+                                    int numTransform)
     {
         int index = blockIdx.x * blockDim.x + threadIdx.x;
     
@@ -127,6 +130,59 @@ fractalKernelCode = """
             cTYPE p = convertToComplex(i, j, height, width);
             int count = evolveComplexPoint(p, c, maxIterations, divergenceVal);
             data[i * width + j] = count; 
+        }
+    }
+"""
+
+gpuHammersley ="""
+    __global__ void hammersley(int numSamples, float *xPoints, float *yPoints)
+    {
+        int index = blockIdx.x * blockDim.x + threadIdx.x;
+        // figure out how many bits we are working in.
+        size_t truncateBits = 0;
+        size_t value = 1;
+        size_t numBits = 0;
+    
+        while (value < numSamples)
+        {
+            value *= 2;
+            ++numBits;
+        }
+    
+        // calculate the sample points   
+        if (index < numSamples)
+        {
+            // x axis
+            xPoints[index] = 0.0f;
+            {
+                size_t n = index >> truncateBits;
+                float base = 1.0f / 2.0f;
+    
+                while (n)
+                {
+                    if (n & 1) xPoints[index] += base;
+    
+                    n /= 2;
+                    base /= 2.0f;
+                }
+            }
+    
+            // y axis
+            yPoints[index] = 0.0f;
+            {
+                size_t n = index >> truncateBits;
+                size_t mask = size_t(1) << (numBits - 1 - truncateBits);
+    
+                float base = 1.0f / 2.0f;
+    
+                while (mask)
+                {
+                    if (n & mask) yPoints[index] += base;
+    
+                    mask /= 2;
+                    base /= 2.0f;
+                }
+            }
         }
     }
 """
