@@ -1,9 +1,8 @@
-import random
 import sys
-
 import numpy as np
 import pycuda.autoinit  # noqa
 import pycuda.gpuarray as gpuarray
+from timeit import default_timer as timer
 from pycuda.compiler import SourceModule
 
 import KernelCode
@@ -25,8 +24,9 @@ def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
     :param height: Height of the image in pixels
     :param num_points: Number of points in fractal
     :param output_file: File to save the image to
-    :return: none
+    :return: algorithm runtime in seconds
     """
+    start = timer()
     # Generate Hammersley sequence
     hammersley = Utilities.hammersley(num_points)
     x = list()
@@ -61,7 +61,7 @@ def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
     y = gpuY.get()
     points = list(zip(x, y))
     Utilities.drawImage(points, width, height, output_file)
-
+    return timer() - start
 
 def gpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
                         divergence_value=4, width=300, block_size=64,

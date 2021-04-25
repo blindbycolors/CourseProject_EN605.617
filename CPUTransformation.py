@@ -2,7 +2,7 @@ from random import uniform
 import numpy as np
 import Utilities
 import constants
-
+from timeit import  default_timer as timer
 
 def cpuIfsTransform(transformation=constants.ifsFractals["fern"], width=600,
                     height=600, num_points=100000, output_file="cpuOut.png"):
@@ -16,8 +16,9 @@ def cpuIfsTransform(transformation=constants.ifsFractals["fern"], width=600,
     :param height: Height of the image in pixels
     :param num_points: Number of points in the fractal
     :param output_file: File to save the image to
-    :return: none
+    :return: algorithm run time in seconds
     """
+    start = timer()
     probabilityJoin = sum(t[6] for t in transformation)
     points = set([(0, 0)])
     while len(points) <= num_points:
@@ -46,7 +47,7 @@ def cpuIfsTransform(transformation=constants.ifsFractals["fern"], width=600,
         points.update(newPoints)
 
     Utilities.drawImage(points, width, height, output_file)
-
+    return timer() - start
 
 def cpuDivergentFractal(c=constants.juliaFractals["set1"], iterations=200,
                         divergence_value=10, width=300, output_file="cpuOut.png"):
