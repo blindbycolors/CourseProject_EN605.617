@@ -1,7 +1,8 @@
 """
 CUDA kernel code for IFS Fractal Transformations
+Algorithm source: https://jo.dreggn.org/home/2010_fractal_flames.pdf
 """
-ifsTransform = """
+ifs_transform_kernel_code = """
 #include <curand.h>
 #include <curand_kernel.h>
 
@@ -44,7 +45,7 @@ extern "C"
             curand_init((unsigned long long)clock(), index, 0, &state);
             float random = curand_uniform(&state);
             float currX, currY;
-            float randStart = (float)curand_uniform(&state);
+            float randStart = (float) curand_uniform(&state);
             int randPoint = curand(&state) % numPoints;
             currX = xPoints[randPoint];
             currY = yPoints[randPoint];
@@ -59,10 +60,10 @@ extern "C"
     
                 if (random <= pSum)
                 {
-                    float newX = currX * sharedTransform[i * 7 + 0] + currY * sharedTransform[i * 7 + 1]
-                        + sharedTransform[i * 7 + 4];
-                    currY = currX * sharedTransform[i * 7 + 2] + currY * sharedTransform[i * 7 + 3] +
-                        sharedTransform[i * 7 + 5];
+                    float newX = currX * sharedTransform[i * 7 + 0] + currY *
+                        sharedTransform[i * 7 + 1] + sharedTransform[i * 7 + 4];
+                    currY = currX * sharedTransform[i * 7 + 2] + currY *
+                        sharedTransform[i * 7 + 3] + sharedTransform[i * 7 + 5];
                     currX = newX;
                     xPoints[index] = currX;
                     yPoints[index] = currY;
@@ -78,7 +79,7 @@ extern "C"
 """
 CUDA kernel code for Julia fractal sets
 """
-fractalKernelCode = """
+divergent_fractal_kernel_code = """
     #include <cuComplex.h>
     #include <vector_types.h>
             
@@ -99,7 +100,10 @@ fractalKernelCode = """
         return cuCaddf(cuCmulf(p, p), c);
     }
     
-    __device__ int evolveComplexPoint(cTYPE z, cTYPE c, int maxIterations, int divergenceVal)
+    __device__ int evolveComplexPoint(cTYPE z,
+                                      cTYPE c,
+                                      int maxIterations,
+                                      int divergenceVal)
     {
         int it = 0;
     
@@ -111,7 +115,10 @@ fractalKernelCode = """
         return it;
     }
     
-    __device__ cTYPE convertToComplex(int x, int y, const int height, const int width)
+    __device__ cTYPE convertToComplex(int x,
+                                      int y,
+                                      const int height,
+                                      const int width)
     {
         TYPE jx = 1.5 * (x - width / 2) / (0.5 * width);
         TYPE jy = (y - height / 2) / (0.5 * height);
@@ -134,7 +141,11 @@ fractalKernelCode = """
     }
 """
 
-gpuHammersley ="""
+"""
+original source for sequential Hammersley sequence generation
+https://blog.demofox.org/2017/05/29/when-random-numbers-are-too-random-low-discrepancy-sequences/
+"""
+gpu_hammersley_kernel_code = """
     __global__ void hammersley(int numSamples, float *xPoints, float *yPoints)
     {
         int index = blockIdx.x * blockDim.x + threadIdx.x;

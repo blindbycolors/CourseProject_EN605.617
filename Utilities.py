@@ -1,10 +1,9 @@
 from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
 import numpy as np
-from ctypes import *
 
 
-def drawImage(points, width, height, output_file="output.png"):
+def draw_image(points, width, height, output_file="output.png"):
     # find out image limits determine scaling and translating
     min_x = min(points, key=lambda p: p[0])[0]
     max_x = max(points, key=lambda p: p[0])[0]
@@ -29,7 +28,7 @@ def drawImage(points, width, height, output_file="output.png"):
     image.save(output_file, "PNG")
 
 
-def plotFractal(fractal_data, img_size=16, tol=.1, output_file="out.png"):
+def plot_fractal(fractal_data, img_size=16, tol=.1, output_file="out.png"):
     img = -np.log(fractal_data + tol)
     plt.figure(figsize=(img_size, img_size))
     plt.axis('off')

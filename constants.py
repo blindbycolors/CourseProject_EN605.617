@@ -2,22 +2,17 @@ import numpy as np
 
 # IFS Transformation parameters are from
 # Paul Bourke - http://paulbourke.net/fractals/ifs/
-
-barnsleyFern = [
+barnsley_fern = [
     [0, 0, 0, 0.16, 0, 0, 0.01],
     [0.85, 0.04, -0.04, 0.85, 0, 1.6, 0.85],
     [0.20, -0.26, 0.23, 0.22, 0, 1.6, 0.07],
     [-0.15, 0.28, 0.26, 0.24, 0, 0.44, 0.07]
 ]
-goldenDragon = [
+golden_dragon = [
     [0.62367, -0.40337, 0.40337, 0.62367, 0, 0, 0.5],
     [-0.37633, -0.40337, 0.40337, -0.37633, 0.5, 0, 0.5]
 ]
-dragon = [
-    [0.824074, 0.281428, -0.212346, 0.864198, -1.882290, -0.110607, 0.8],
-    [0.088272, 0.520988, -0.463889, -0.377778, 0.785360, 8.09579, 0.2]
-]
-mapleLeaf = [
+maple_leaf = [
     [0.14, 0.01, 0.00, 0.51, -0.08, -1.31, 0.10],
     [0.43, 0.52, -0.45, 0.50, 1.49, -0.75, 0.35],
     [0.45, - 0.49, 0.47, 0.47, -1.62, -0.74, 0.35],
@@ -31,7 +26,7 @@ pentadentrite = [
     [0.173, 0.302, -0.302, 0.173, 0.486, 0.231, 0.16],
     [0.341, -0.071, 0.071, 0.341, 0.659, -0.071, 0.16]
 ]
-kochCurve = [
+koch_curve = [
     [0.3, 0, 0, 0.3, 0, 0, 0.25],
     [0.16, -0.23, 0.23, 0.16, 0.3, 0, 0.25],
     [0.16, 0.23, -0.23, 0.16, 0.5, 0.23, 0.25],
@@ -55,18 +50,18 @@ twig = [
     [-0.468, 0.020, -0.113, 0.015, 0.4, 0.4, 0.34]
 ]
 
-ifsFractals = {
-    "fern": barnsleyFern,
-    "goldenDragon": goldenDragon,
-    "mapleLeaf": mapleLeaf,
+ifs_fractals = {
+    "fern": barnsley_fern,
+    "dragon": golden_dragon,
+    "leaf": maple_leaf,
     "pentadentrite": pentadentrite,
-    "kochCurve": kochCurve,
+    "koch": koch_curve,
     "spiral": spiral,
     "tree": tree,
     "twig": twig
 }
 
-juliaFractals = {
+julia_fractals = {
     "set1": np.complex64(0 + 0.8j),
     "set2": np.complex64(0.37 + 0.1j),
     "set3": np.complex64(0.355 + 0.355j),

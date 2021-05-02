@@ -10,9 +10,9 @@ import Utilities
 import constants
 
 
-def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
-                    width=600, height=600, num_points=100000,
-                    block_size=64, output_file="gpuOut.png"):
+def gpu_ifs_transform(transformation=constants.ifs_fractals["fern"],
+                      width=600, height=600, num_points=100000,
+                      block_size=64, output_file="gpuOut.png"):
     """
     This function will perform the Iterated Function System (IFS) fractal
     algorithm via CUDA.
@@ -30,43 +30,44 @@ def gpuIfsTransform(transformation=constants.ifsFractals["fern"],
     # Generate Hammersley sequence
     block = (block_size, 1, 1)
 
-    gpuX = gpuarray.to_gpu(np.zeros(num_points, np.float32))
-    gpuY = gpuarray.to_gpu(np.zeros(num_points, np.float32))
-    dataGeneration = SourceModule(KernelCode.gpuHammersley)
-    hammersleyFunc = dataGeneration.get_function("hammersley")
-    hammersleyFunc(np.int32(num_points), gpuX, gpuY, block=block)
+    gpu_x = gpuarray.to_gpu(np.zeros(num_points, np.float32))
+    gpu_y = gpuarray.to_gpu(np.zeros(num_points, np.float32))
+    data_generation = SourceModule(KernelCode.gpu_hammersley_kernel_code)
+    hammersley_func = data_generation.get_function("hammersley")
+    hammersley_func(np.int32(num_points), gpu_x, gpu_y, block=block)
 
     transformation = np.array(transformation, np.float32)
-    gpuTransform = gpuarray.to_gpu(transformation)
+    gpu_transform = gpuarray.to_gpu(transformation)
     rows, cols = transformation.shape
 
     grid = (num_points, 1, 1)
-    mod = SourceModule(KernelCode.ifsTransform, no_extern_c=True)
-    ifsFunc = mod.get_function("phase1Transform")
-    ifsFunc(gpuX, gpuY, gpuTransform, np.int32(num_points), np.int32(rows),
-            block=block, grid=grid, shared=sys.getsizeof(gpuTransform))
+    mod = SourceModule(KernelCode.ifs_transform_kernel_code, no_extern_c=True)
+    ifs_func = mod.get_function("phase1Transform")
+    ifs_func(gpu_x, gpu_y, gpu_transform, np.int32(num_points), np.int32(rows),
+             block=block, grid=grid, shared=sys.getsizeof(gpu_transform))
 
-    currIter = 0
-    while currIter < 15:
-        ifsFunc(gpuX, gpuY, gpuTransform,
-                np.int32(num_points), np.int32(rows),
-                block=block, grid=grid,
-                shared=sys.getsizeof(gpuTransform))
-        currIter += 1
+    curr_iter = 0
+    while curr_iter < 15:
+        ifs_func(gpu_x, gpu_y, gpu_transform,
+                 np.int32(num_points), np.int32(rows),
+                 block=block, grid=grid,
+                 shared=sys.getsizeof(gpu_transform))
+        curr_iter += 1
 
-    x = gpuX.get()
-    y = gpuY.get()
+    x = gpu_x.get()
+    y = gpu_y.get()
     points = list(zip(x, y))
-    Utilities.drawImage(points, width, height, output_file)
-    return timer() - start
+    run_time = timer() - start
+    Utilities.draw_image(points, width, height, output_file)
+    return run_time
 
 
-def gpuDivergentFractal(c=constants.juliaFractals["set1"],
-                        iterations=200,
-                        divergence_value=10,
-                        width=300,
-                        block_size=64,
-                        output_file="gpuOut.png"):
+def gpu_divergent_fractal(c=constants.julia_fractals["set1"],
+                          iterations=200,
+                          divergence_value=10,
+                          width=300,
+                          block_size=64,
+                          output_file="gpuOut.png"):
     """
     GPU implementation of divergent quadratic map 'z = z^2 + c' for nIterations.
     :param block_size: GPU block size
@@ -79,16 +80,17 @@ def gpuDivergentFractal(c=constants.juliaFractals["set1"],
     """
     start = timer()
     height = width
-    gpuData = gpuarray.empty((width, height), np.int32)
+    gpu_data = gpuarray.empty((width, height), np.int32)
 
-    mod = SourceModule(KernelCode.fractalKernelCode)
+    mod = SourceModule(KernelCode.divergent_fractal_kernel_code)
     block = (block_size, 1, 1)
     grid = (width, height, 1)
 
     func = mod.get_function("computeFractal")
-    func(gpuData, c, np.int32(width), np.int32(height),
+    func(gpu_data, c, np.int32(width), np.int32(height),
          np.int32(iterations),
          np.int32(divergence_value), block=block, grid=grid)
-    data = gpuData.get()
-    Utilities.plotFractal(data, width, height, output_file)
-    return timer() - start
+    data = gpu_data.get()
+    run_time = timer() - start
+    Utilities.plot_fractal(data, width, height, output_file)
+    return run_time

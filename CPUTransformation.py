@@ -5,7 +5,7 @@ import constants
 from timeit import default_timer as timer
 
 
-def cpuIfsTransform(transformation=constants.ifsFractals["fern"],
+def cpuIfsTransform(transformation=constants.ifs_fractals["fern"],
                     width=600,
                     height=600,
                     num_points=100000,
@@ -27,11 +27,9 @@ def cpuIfsTransform(transformation=constants.ifsFractals["fern"],
     points = set([(0, 0)])
     while len(points) <= num_points:
         newPoints = set()
-        x = 0
-        y = 0
 
         # for each point
-        for point in points:
+        for (x, y) in points:
             # decide which transformation to apply
             rnd = uniform(0, probabilityJoin)
             pSum = 0
@@ -49,12 +47,12 @@ def cpuIfsTransform(transformation=constants.ifsFractals["fern"],
                     break
 
         points.update(newPoints)
+    run_time = timer() - start
+    Utilities.draw_image(points, width, height, output_file)
+    return run_time
 
-    Utilities.drawImage(points, width, height, output_file)
-    return timer() - start
 
-
-def cpuDivergentFractal(c=constants.juliaFractals["set1"],
+def cpuDivergentFractal(c=constants.julia_fractals["set1"],
                         iterations=200,
                         divergence_value=10,
                         width=300,
@@ -86,5 +84,6 @@ def cpuDivergentFractal(c=constants.juliaFractals["set1"],
                     break
                 points[w, h] = count
 
-    Utilities.plotFractal(points, output_file=output_file)
-    return timer() - start
+    run_time = timer() - start
+    Utilities.plot_fractal(points, output_file=output_file)
+    return run_time
