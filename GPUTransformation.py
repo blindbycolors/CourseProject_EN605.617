@@ -24,7 +24,7 @@ def gpu_ifs_transform(transformation=constants.ifs_fractals["fern"],
     :param height: Height of the image in pixels
     :param num_points: Number of points in fractal
     :param output_file: File to save the image to
-    :return: algorithm runtime in seconds
+    :return: algorithm runtime in seconds, number of points
     """
     start = timer()
     # Generate Hammersley sequence
@@ -59,7 +59,7 @@ def gpu_ifs_transform(transformation=constants.ifs_fractals["fern"],
     points = list(zip(x, y))
     run_time = timer() - start
     Utilities.draw_image(points, width, height, output_file)
-    return run_time
+    return run_time, len(points)
 
 
 def gpu_divergent_fractal(c=constants.julia_fractals["set1"],
@@ -92,5 +92,7 @@ def gpu_divergent_fractal(c=constants.julia_fractals["set1"],
          np.int32(divergence_value), block=block, grid=grid)
     data = gpu_data.get()
     run_time = timer() - start
-    Utilities.plot_fractal(data, width, height, output_file)
+    Utilities.plot_fractal(fractal_data=data,
+                           img_size=width,
+                           output_file=output_file)
     return run_time

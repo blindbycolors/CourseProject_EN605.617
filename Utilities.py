@@ -25,6 +25,7 @@ def draw_image(points, width, height, output_file="output.png"):
         y = height - (point[1] - min_y) * scale
         draw.point((x, y))
 
+    print("Saving image to: " + output_file)
     image.save(output_file, "PNG")
 
 
@@ -32,5 +33,5 @@ def plot_fractal(fractal_data, img_size=16, tol=.1, output_file="out.png"):
     img = -np.log(fractal_data + tol)
     plt.figure(figsize=(img_size, img_size))
     plt.axis('off')
-    plt.imshow(img)
+    print("Saving image to: " + output_file)
     plt.savefig(output_file, bbox_inches='tight')

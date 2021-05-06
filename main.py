@@ -29,25 +29,29 @@ def print_help():
 
 
 def save_ifs_times(cpu_time, gpu_time, transformation, timing_file, num_points,
-                   block_size, img_width, img_height):
+                   block_size, img_width, img_height, cpu_points, gpu_points):
     new_results = {"transformation": [transformation],
                    "points": [num_points],
                    "cpu_ime": [cpu_time],
                    "gpu_time": [gpu_time],
                    "img_width": [img_width],
                    "img_height": [img_height],
-                   "block_size": [block_size]}
+                   "block_size": [block_size],
+                   "cpu_points": [cpu_points],
+                   "gpu_points": [gpu_points]}
     new_results = pd.DataFrame.from_dict(new_results)
 
-    if path.exists(timing_file):
-        print("File exists... Loading in csv...")
-        results_table = pd.read_csv(timing_file, index_col=False)
-        results_table = results_table.append(new_results)
-    else:
-        results_table = new_results
+    if len(timing_file) > 0:
+        if path.exists(timing_file):
+            print("File exists... Loading in csv...")
+            results_table = pd.read_csv(timing_file, index_col=False)
+            results_table = results_table.append(new_results)
+        else:
+            results_table = new_results
 
-    results_table.to_csv(timing_file, index=False)
-    print("Saved results to ", timing_file)
+        results_table.to_csv(timing_file, index=False)
+        print("Saved results to ", timing_file)
+
     print(tabulate(new_results, headers=new_results.keys()))
 
 
@@ -61,15 +65,17 @@ def save_julia_times(cpu_time, gpu_time, julia_set, output_file, iterations,
                          "block_size": [block]}
     new_results_table = pd.DataFrame.from_dict(new_results_table)
 
-    if path.exists(output_file):
-        print("File exists... Loading in csv...")
-        results_table = pd.read_csv(output_file, index_col=False)
-        results_table = results_table.append(new_results_table)
-    else:
-        results_table = new_results_table
+    if len(output_file) > 0:
+        if path.exists(output_file):
+            print("File exists... Loading in csv...")
+            results_table = pd.read_csv(output_file, index_col=False)
+            results_table = results_table.append(new_results_table)
+        else:
+            results_table = new_results_table
 
-    results_table.to_csv(output_file, index=False)
-    print("Saved results to ", output_file)
+        results_table.to_csv(output_file, index=False)
+        print("Saved results to ", output_file)
+
     print(tabulate(new_results_table, headers=new_results_table.keys()))
 
 
@@ -90,26 +96,24 @@ def run_julia(set_to_run, iterations, divergence_val, width, block_size,
                                                 block_size=block_size,
                                                 output_file=gpu_output_file)
 
-    if len(timing_file) > 0:
-        save_julia_times(cpu_time=cpu_run_time,
-                         gpu_time=gpu_run_time,
-                         julia_set=transform_name,
-                         output_file=timing_file,
-                         size=width,
-                         block=block_size,
-                         iterations=iterations)
+    save_julia_times(cpu_time=cpu_run_time,
+                     gpu_time=gpu_run_time,
+                     julia_set=transform_name,
+                     output_file=timing_file,
+                     size=width,
+                     block=block_size,
+                     iterations=iterations)
 
 
 def run_ifs(transformation, width, height, num_points, gpu_output_file,
             cpu_output_file, timing_file, block, ifs_name):
-    transformation_to_run = constants.ifs_fractals[transformation]
-    cpu_run_time = \
-        CPUTransformation.cpuIfsTransform(transformation=transformation_to_run,
+    cpu_run_time, cpu_total_points = \
+        CPUTransformation.cpuIfsTransform(transformation=transformation,
                                           width=width,
                                           height=height,
                                           num_points=num_points,
                                           output_file=cpu_output_file)
-    gpu_run_time = \
+    gpu_run_time, gpu_total_points = \
         GPUTransformation.gpu_ifs_transform(transformation=transformation,
                                             width=width,
                                             height=height,
@@ -117,9 +121,9 @@ def run_ifs(transformation, width, height, num_points, gpu_output_file,
                                             block_size=block,
                                             output_file=gpu_output_file)
 
-    if len(timing_file) > 0:
-        save_ifs_times(cpu_run_time, gpu_run_time, ifs_name, timing_file,
-                       num_points, block, width, height)
+    save_ifs_times(cpu_run_time, gpu_run_time, ifs_name, timing_file,
+                   num_points, block, width, height, cpu_total_points,
+                   gpu_total_points)
 
 
 def process_julia_runs(i, n):

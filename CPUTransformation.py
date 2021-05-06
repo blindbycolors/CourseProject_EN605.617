@@ -20,7 +20,7 @@ def cpuIfsTransform(transformation=constants.ifs_fractals["fern"],
     :param height: Height of the image in pixels
     :param num_points: Number of points in the fractal
     :param output_file: File to save the image to
-    :return: algorithm run time in seconds
+    :return: algorithm run time in seconds, number of points
     """
     start = timer()
     probabilityJoin = sum(t[6] for t in transformation)
@@ -49,7 +49,7 @@ def cpuIfsTransform(transformation=constants.ifs_fractals["fern"],
         points.update(newPoints)
     run_time = timer() - start
     Utilities.draw_image(points, width, height, output_file)
-    return run_time
+    return run_time, len(points)
 
 
 def cpuDivergentFractal(c=constants.julia_fractals["set1"],
