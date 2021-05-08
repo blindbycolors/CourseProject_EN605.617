@@ -8,7 +8,7 @@ do
 $gpuFileName --cpu_output $cpuFileName --timing $PWD/julia_times.csv \
 --block 8 --iterations ${iter}"
     python3 main.py --julia $i --size 300 --gpu_output $gpuFileName \
-    --cpu_output $cpuFileName --block 8 \
+    --cpu_output $cpuFileName --block 8 --timing $PWD/julia_times.csv \
     --iterations $iter
   done
 done
