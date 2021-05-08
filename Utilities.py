@@ -34,4 +34,5 @@ def plot_fractal(fractal_data, img_size=16, tol=.1, output_file="out.png"):
     plt.figure(figsize=(img_size, img_size))
     plt.axis('off')
     print("Saving image to: " + output_file)
+    plt.imshow(img)
     plt.savefig(output_file, bbox_inches='tight')
