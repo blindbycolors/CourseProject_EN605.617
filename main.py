@@ -9,8 +9,8 @@ from tabulate import tabulate
 
 def print_help():
     print(
-        "To run IFS fractal generation: --ifs {fern, dragon, leaf, pentadentrite, "
-        "koch, spiral, tree, twig}")
+        "To run IFS fractal generation: --ifs {fern, dragon, leaf, "
+        "pentadentrite, koch, spiral, tree, twig}")
     print("Optional arguments: --width {width of image}"
           "--height {height of image}"
           "--points {number of points}"
