@@ -1,6 +1,6 @@
-for i in {1..20}
+for i in 13 #{1..20}
 do
-  for iter in {50..300..50}
+  for iter in {100..300..50}
   do
     gpuFileName="${PWD}/images/julia/gpuOut_${i}_${iter}.png"
     cpuFileName="${PWD}/images/julia/cpuOut_${i}_${iter}.png"

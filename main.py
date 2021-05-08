@@ -32,7 +32,7 @@ def save_ifs_times(cpu_time, gpu_time, transformation, timing_file, num_points,
                    block_size, img_width, img_height, cpu_points, gpu_points):
     new_results = {"transformation": [transformation],
                    "points": [num_points],
-                   "cpu_ime": [cpu_time],
+                   "cpu_time": [cpu_time],
                    "gpu_time": [gpu_time],
                    "img_width": [img_width],
                    "img_height": [img_height],
@@ -174,6 +174,7 @@ def process_ifs_runs(i, n):
         print("Error: Select a IFS algorithm")
         print_help()
         exit(0)
+    print(sys.argv)
     transform_name = sys.argv[i]
     transform = constants.ifs_fractals[transform_name]
     width = 300

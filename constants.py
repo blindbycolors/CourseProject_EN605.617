@@ -1,6 +1,6 @@
 import numpy as np
 
-# IFS Transformation parameters are from
+# IFS Transformation parameters
 # Paul Bourke - http://paulbourke.net/fractals/ifs/
 barnsley_fern = [
     [0, 0, 0, 0.16, 0, 0, 0.01],
@@ -61,6 +61,10 @@ ifs_fractals = {
     "twig": twig
 }
 
+# Julia fractal sets 1-8 are from Paul Bourke
+# http://paulbourke.net/fractals/juliaset/ Julia fractal sets 9-14 are from
+# Karl Sims https://www.karlsims.com/julia.html#:~:text=Julia%20set
+# %20fractals%20are%20normally,gives%20a%20specific%20Julia%20set.
 julia_fractals = {
     "set1": np.complex64(0 + 0.8j),
     "set2": np.complex64(0.37 + 0.1j),
@@ -68,18 +72,12 @@ julia_fractals = {
     "set4": np.complex64(-0.54 + 0.54j),
     "set5": np.complex64(-0.4 + -0.59j),
     "set6": np.complex64(0.34 + -0.05j),
-    "set7": np.complex64(0 + 0.8j),
-    "set8": np.complex64(0.37 + 0.1j),
-    "set9": np.complex64(0.355 + 0.355j),
-    "set10": np.complex64(-0.54 + 0.54j),
-    "set11": np.complex64(-0.4 + -0.59j),
-    "set12": np.complex(0.355534 - 0.337292j),
-    "set13": np.complex(-0.202420806884766 + 0.39527333577474),
-    "set14": np.complex64(-1.34882125854492 + -0.454237874348958),
-    "set15": np.complex64(-0.79 + 0.15j),
-    "set16": np.complex64(-0.162 + 1.04j),
-    "set17": np.complex64(0.3 + -0.01j),
-    "set18": np.complex64(-1.476 + 0j),
-    "set19": np.complex64(-0.12 + -0.77j),
-    "set20": np.complex64(0.28 + .008j)
+    "set7": np.complex(0.355534 - 0.337292j),
+    "set8": np.complex64(-1.34882125854492 + -0.454237874348958j),
+    "set9": np.complex64(-0.79 + 0.15j),
+    "set10": np.complex64(-0.162 + 1.04j),
+    "set11": np.complex64(0.3 + -0.01j),
+    "set12": np.complex64(-1.476 + 0j),
+    "set13": np.complex64(-0.12 + -0.77j),
+    "set14": np.complex64(0.28 + .008j)
 }
