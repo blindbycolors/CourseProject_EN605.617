@@ -77,5 +77,28 @@ Optional arguments:<br>
 <h2>Julia Set 2</h2>
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia2.gif)
 
-Additional images can be found in the /images directory.
+<h2>Julia Set 3</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia3.gif)
+
+<h2>Julia Set 5</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia5.gif)
+
+<h2>Julia Set 9</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia9.gif)
+
+<h2>Julia Set 14</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia14.gif)
+
+<h2>IFS Spiral</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Spiral.gif)
+
+<h2>IFS Fern</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Fern.gif)
+
+<h2>IFS Dragon</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Dragon.gif)
+
+<h2>IFS Tree</h2>
+![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Tree.gif)
+
 
