@@ -76,7 +76,6 @@ Optional arguments:<br>
 
 <h2>Julia Set 2</h2>
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia2.gif)
-![ScreenShot](Julia2.gif)
 
 <h2>Julia Set 3</h2>
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia3.gif)
@@ -102,4 +101,5 @@ Optional arguments:<br>
 <h2>IFS Tree</h2>
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Tree.gif)
 
+Additional images can be found in the directory /images
 
