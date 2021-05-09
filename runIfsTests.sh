@@ -1,4 +1,4 @@
-for ifs in "fern" "dragon" "pentadentrite" "koch" "spiral" "tree" "twig"
+for ifs in "leaf" "fern" "dragon" "pentadentrite" "koch" "spiral" "tree" "twig"
 do
   for numPoint in 10000 50000 100000 150000 2000000 300000
   do

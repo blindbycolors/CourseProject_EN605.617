@@ -1,4 +1,4 @@
-for i in 13 #{1..20}
+for i in {}1..20}
 do
   for iter in {100..300..50}
   do
