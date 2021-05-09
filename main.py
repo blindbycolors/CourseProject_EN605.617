@@ -14,11 +14,11 @@ def print_help():
     print("Optional arguments: --width {width of image}"
           "--height {height of image}"
           "--points {number of points}"
-          "--gpu_out {full path for gpu image file}"
-          "--cpu_out {full path for cpu image file}"
+          "--gpu_output {full path for gpu image file}"
+          "--cpu_output {full path for cpu image file}"
           "--block {block size for gpu}"
           "--timing {full file path to save run times}")
-    print("To run a Julia set fractal: --julia {1-20}")
+    print("To run a Julia set fractal: --julia {1-14}")
     print("Optional arguments: --size {size of image width/height}"
           "--iterations {number of total iterations}"
           "--gpu_output {full path for gpu image file}"
@@ -187,7 +187,7 @@ def process_ifs_runs(i, n):
     i += 1
     while i < n:
         try:
-            if sys.argv[i] == "--width" or sys.argv[i] == "-s":
+            if sys.argv[i] == "--width" or sys.argv[i] == "-w":
                 width = int(sys.argv[i + 1])
             elif sys.argv[i] == "--height" or sys.argv[i] == "-h":
                 height = int(sys.argv[i + 1])
