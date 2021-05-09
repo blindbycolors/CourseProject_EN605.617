@@ -1,4 +1,4 @@
-#CUDA Fractal Art Generator
+# PYCUDA Fractal Art Generator
 
 This project implements a CUDA fractal art generator implemented in Python. The
 project was tested with Python 3.8.5. Additionally, the project requires and was
@@ -41,11 +41,11 @@ Julia Fractal sets that are implemented are:
 - set 13: -0.12 - 0.77i
 - set 14: 0.28 + .008i 
 
-#Running the Software
-To generate an implemented IFS fractal:<br>
+# Running the Software
+To generate an implemented IFS fractal:  
 python3 main.py --ifs {fern, dragon, leaf, pentadentrite, koch, spiral, tree, tree}
 
-Optional arguments:<br>
+Optional arguments:
 - --width, -w {width of image}
 - -height, -h {height of image}
 - --points, -p {number of points}
@@ -55,10 +55,10 @@ Optional arguments:<br>
 - --timing, -t {full file path to save run times} 
   - If blank, runtimes will not be saved
 
-To generate an implemented Julia set fractal:<br>
+To generate an implemented Julia set fractal:  
 python3 main.py --julia {1-14}
 
-Optional arguments:<br>
+Optional arguments:
 - --size, -s {size of image width/height}
     - Note, if the size is too large and not enough memory is allocated to the
       Python stack, a seg fault will occur and kill the python process
@@ -70,35 +70,44 @@ Optional arguments:<br>
 - --timing {full path for file to save run times}
   - If blank, runtimes will not be saved
 
-<b>Optional arguments can be provided in any order.</b>
+**Optional arguments can be provided in any order.**
 
-#Examples
+# Examples
 
-<h2>Julia Set 2</h2>
+## Julia Set 2
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia2.gif)
 
-<h2>Julia Set 3</h2>
+## Julia Set 3
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia3.gif)
 
-<h2>Julia Set 5</h2>
+## Julia Set 5
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia5.gif)
 
-<h2>Julia Set 9</h2>
+## Julia Set 9
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia9.gif)
 
-<h2>Julia Set 14</h2>
+## Julia Set 14
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Julia14.gif)
 
-<h2>IFS Spiral</h2>
+## IFS Spiral
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Spiral.gif)
 
-<h2>IFS Fern</h2>
+# IFS Fern
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Fern.gif)
 
-<h2>IFS Dragon</h2>
+## IFS Dragon
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Dragon.gif)
 
-<h2>IFS Tree</h2>
+## IFS Tree
+
 ![alt text](https://github.com/blindbycolors/CourseProject_EN605.617/blob/main/Tree.gif)
 
 Additional images can be found in the directory /images
